@@ -8,10 +8,12 @@ This code elaborates the scalable formation control in continuous systems
 -- not finished yet --
 """
 import numpy as np
-from scipy import signal
-from scipy.signal import lsim
 import matplotlib.pyplot as plt
 
+from scipy import signal
+from scipy.signal import lsim
+
+# Initialization
 # untuk mendapatkan nilai phi = L + R
 adjA = np.array([[0, 1, 0, 0],
                 [0, 0, 0, 1],
@@ -22,7 +24,7 @@ v = np.ones(4, dtype=np.int16)
 D = np.diag(v)
 L = D - adjA
 
-# Definisikan xdx dan xdy
+# Define xdx and xdy
 xdx = np.array([[1], [3], [1], [3]])
 xdy = np.array([[1], [1], [3], [3]])
 
@@ -42,7 +44,7 @@ for i in range(4):
    ry[i] = -(1/xdy[i]*sum(sumB[i,:]))
    
    
-# Definisikan matrix R diagonal
+# Define diagonal matrix
 Rx = np.array([[rx[0], 0, 0, 0],
                [0, rx[1], 0, 0],
                [0, 0, rx[2], 0],
@@ -62,7 +64,6 @@ np.linalg.eig(phiy)
 Ax = np.concatenate(([-L, -Rx],[np.zeros((4,4)), -Rx]))
 Ay = np.concatenate(([-L, -Ry],[np.zeros((4,4)), -Ry]))
 
-
 A = np.random.rand(4,4)
 B = np.zeros((8,1))
 C = np.eye(8)
@@ -77,8 +78,14 @@ sysx = signal.StateSpace(Ax, B, C, D)
 sysy = signal.StateSpace(Ay, B, C, D)
 
 # scipy.signal.lsim(system, U, T, X0=None, interp=True)
-x = lsim(sysx, u, t,np.array([[2],[4],[8],[2],[4],[9],[8],[xdx[4]]]))
-y = lsim(sysy, u, t,np.array([[0],[0],[1],[8],[8],[2],[9],[xdy[4]]]))
+x = lsim(sysx, u, t, np.array([[2],[4],[8],[2],[4],[9],[8],[xdx[4]]]))
+y = lsim(sysy, u, t, np.array([[0],[0],[1],[8],[8],[2],[9],[xdy[4]]]))
+
+x1 = lsim(sysx, u, t, np.array([[x[f,1]], [x[f,2]], [x[f,3]], [x[f,4]],
+                                [x[f,5]], [x[f,6]], [x[f,7], [xdx[4]*2])) 
+y1 = lsim(sysy, u, t, np.array([[y[f,1]], [y[f,2]], [y[f,3]], [y[f,4]],
+                                [y[f,5]], [y[f,6]], [y[f,7], [xdy[4]*2]))
+
 
 '''
 x = lsim(sysx,u,t,[2;4;8;2;4;9;8;xdx(4)]);
