@@ -88,6 +88,7 @@ y1 = lsim(sysy, u, t, np.array([[y[f,1]], [y[f,2]], [y[f,3]], [y[f,4]],
 
 
 '''
+This code is obtained from MATLAB
 x = lsim(sysx,u,t,[2;4;8;2;4;9;8;xdx(4)]);
 y = lsim(sysy,u,t,[0;0;1;8;8;2;9;xdy(4)]);
 
