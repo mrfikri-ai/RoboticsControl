@@ -209,7 +209,7 @@ obstacle = np.array([[0, 2],
                      [7, 4],
                      [9, 8],
                      [9, 11],
-                     [9, 6]])
+                     [9, 5]])
 
 # Obstacle radius for collision detection
 obstacleR = 0.6;
